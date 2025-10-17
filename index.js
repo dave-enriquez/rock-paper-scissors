@@ -1,5 +1,3 @@
-let humanScore = 0
-let computerScore = 0
 
 
 function getComputerChoice() {
@@ -16,40 +14,60 @@ function getHumanChoice() {
     return humanSelection
 }
 
-function playRound(humanGuess, computerGuess) {
+function playRound(humanGuess, computerGuess, humanScore, computerScore) {
+    // let humanScore = humanScore
+    // let computerScore = computerScore
+
     if (humanGuess === 'rock') {
         if (computerGuess === 'paper') {
             computerScore += 1
-            return 'Computer Wins! They chose paper'
+            return { message: 'Computer Wins! They chose paper', humanScore: humanScore, computerScore: computerScore }
         } else if (computerGuess === 'scissors') {
             humanScore += 1
-            return 'You win! They chose scissors'
+            return { message: 'You win! They chose scissors', humanScore: humanScore, computerScore: computerScore }
         } else {
             return 'It is a tie!'
         }
     } else if (humanGuess === 'paper') {
         if (computerGuess === 'scissors') {
             computerScore += 1
-            return "Computer Wins! They chose scissors"
+            return { message: "Computer Wins! They chose scissors", humanScore: humanScore, computerScore: computerScore }
         } else if (computerGuess === 'rock') {
             humanScore += 1
-            return 'You Win! They selected rock'
+            return { message: 'You Win! They selected rock', humanScore: humanScore, computerScore: computerScore }
         } else {
             return 'It is a tie!'
         }
     } else if (humanGuess === 'scissors') {
         if (computerGuess === 'rock') {
             computerScore += 1
-            return 'Computer Wins! They chose rock'
+            return { message: 'Computer Wins! They chose rock', humanScore: humanScore, computerScore: computerScore }
         } else if (computerGuess === 'paper') {
             humanScore += 1
-            return 'You Win! They selected paper'
+            return { message: 'You Win! They selected paper', humanScore: humanScore, computerScore: computerScore }
         } else {
             return 'It is a tie!'
         }
     }
 }
 
-const roundOutcome = playRound(getHumanChoice(), getComputerChoice())
+function playGame(humanGuess, computerGuess) {
+    let humanScore = 0
+    let computerScore = 0
 
-console.log(`${roundOutcome} Human score: ${humanScore} Computer score: ${computerScore}`);
+    for (let i = 1; i < 5; i++) {
+        const outcome = playRound(getHumanChoice(), getComputerChoice(), humanScore, computerScore)
+        humanScore += outcome['humanScore']
+        computerScore += outcome['computerScore']
+        console.log(outcome['message']);
+    }
+
+    if (humanScore > computerScore) {
+        console.log(`You win! Score : You: ${humanScore} Computer: ${computerScore}`)
+    } else {
+        console.log(`You lose! Score : You: ${humanScore} Computer: ${computerScore}`);
+    }
+
+}
+
+playGame(getHumanChoice(), getComputerChoice())
