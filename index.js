@@ -26,7 +26,7 @@ function playRound(humanGuess, computerGuess, humanScore, computerScore) {
             humanScore += 1
             return { message: 'You win! They chose scissors', humanScore: humanScore, computerScore: computerScore }
         } else {
-            return 'It is a tie!'
+            return { message: 'It is a tie', humanScore: 0, computerScore: 0 }
         }
     } else if (humanGuess === 'paper') {
         if (computerGuess === 'scissors') {
@@ -36,7 +36,7 @@ function playRound(humanGuess, computerGuess, humanScore, computerScore) {
             humanScore += 1
             return { message: 'You Win! They selected rock', humanScore: humanScore, computerScore: computerScore }
         } else {
-            return 'It is a tie!'
+            return { message: 'It is a tie', humanScore: 0, computerScore: 0 }
         }
     } else if (humanGuess === 'scissors') {
         if (computerGuess === 'rock') {
@@ -46,7 +46,7 @@ function playRound(humanGuess, computerGuess, humanScore, computerScore) {
             humanScore += 1
             return { message: 'You Win! They selected paper', humanScore: humanScore, computerScore: computerScore }
         } else {
-            return 'It is a tie!'
+            return { message: 'It is a tie', humanScore: 0, computerScore: 0 }
         }
     }
 }
@@ -55,10 +55,10 @@ function playGame(humanGuess, computerGuess) {
     let humanScore = 0
     let computerScore = 0
 
-    for (let i = 1; i < 5; i++) {
+    for (let i = 0; i < 4; i++) {
         const outcome = playRound(getHumanChoice(), getComputerChoice(), humanScore, computerScore)
-        humanScore += outcome['humanScore']
-        computerScore += outcome['computerScore']
+        humanScore = outcome['humanScore']
+        computerScore = outcome['computerScore']
         console.log(outcome['message']);
     }
 
