@@ -1,5 +1,3 @@
-
-
 function getComputerChoice() {
     const options = ['rock', 'paper', 'scissors']
     const computerSelectionIndex = Math.floor(Math.random() * options.length) + 1
@@ -15,8 +13,7 @@ function getHumanChoice() {
 }
 
 function playRound(humanGuess, computerGuess, humanScore, computerScore) {
-    // let humanScore = humanScore
-    // let computerScore = computerScore
+
 
     if (humanGuess === 'rock') {
         if (computerGuess === 'paper') {
@@ -51,23 +48,25 @@ function playRound(humanGuess, computerGuess, humanScore, computerScore) {
     }
 }
 
-function playGame(humanGuess, computerGuess) {
+function playGame() {
     let humanScore = 0
     let computerScore = 0
+
+    alert("Paper, Scissors, Rock best of 5 ")
 
     for (let i = 0; i < 4; i++) {
         const outcome = playRound(getHumanChoice(), getComputerChoice(), humanScore, computerScore)
         humanScore = outcome['humanScore']
         computerScore = outcome['computerScore']
-        console.log(outcome['message']);
+        alert(outcome['message']);
     }
 
     if (humanScore > computerScore) {
-        console.log(`You win! Score : You: ${humanScore} Computer: ${computerScore}`)
+        alert(`You win! Score : You: ${humanScore} Computer: ${computerScore}`)
     } else {
-        console.log(`You lose! Score : You: ${humanScore} Computer: ${computerScore}`);
+        alert(`You lose! Score : You: ${humanScore} Computer: ${computerScore}`);
     }
 
 }
 
-playGame(getHumanChoice(), getComputerChoice())
+playGame()
