@@ -1,5 +1,12 @@
 let continueGame = true
 let iterations = 0
+const rockBtn = document.querySelector('.rock')
+const paperBtn = document.querySelector('.paper')
+const scissorBtn = document.querySelector('.scissors')
+const results = document.querySelector('.results')
+
+let humanScore = 0
+let computerScore = 0
 
 function getComputerChoice() {
     const options = ['rock', 'paper', 'scissors']
@@ -9,46 +16,39 @@ function getComputerChoice() {
     return computerSelection
 }
 
-function getHumanChoice() {
 
-    const humanSelection = prompt('Type rock, paper, or scissors').trim().toLowerCase()
-
-
-    return humanSelection
-}
-
-function playRound(humanGuess, computerGuess, humanScore, computerScore) {
+function playRound(humanGuess, computerGuess) {
 
 
     if (humanGuess === 'rock') {
         if (computerGuess === 'paper') {
             computerScore += 1
-            return { message: 'Computer Wins! They chose paper', humanScore: humanScore, computerScore: computerScore }
+            return 'Computer Wins! They chose paper'
         } else if (computerGuess === 'scissors') {
             humanScore += 1
-            return { message: 'You win! They chose scissors', humanScore: humanScore, computerScore: computerScore }
+            return 'You win! They chose scissors'
         } else {
-            return { message: 'It is a tie' }
+            return 'It is a tie'
         }
     } else if (humanGuess === 'paper') {
         if (computerGuess === 'scissors') {
             computerScore += 1
-            return { message: "Computer Wins! They chose scissors", humanScore: humanScore, computerScore: computerScore }
+            return "Computer Wins! They chose scissors"
         } else if (computerGuess === 'rock') {
             humanScore += 1
-            return { message: 'You Win! They selected rock', humanScore: humanScore, computerScore: computerScore }
+            return 'You Win! They selected rock'
         } else {
-            return { message: 'It is a tie', humanScore: 0, computerScore: 0 }
+            return 'It is a tie'
         }
     } else if (humanGuess === 'scissors') {
         if (computerGuess === 'rock') {
             computerScore += 1
-            return { message: 'Computer Wins! They chose rock', humanScore: humanScore, computerScore: computerScore }
+            return 'Computer Wins! They chose rock'
         } else if (computerGuess === 'paper') {
             humanScore += 1
-            return { message: 'You Win! They selected paper', humanScore: humanScore, computerScore: computerScore }
+            return 'You Win! They selected paper'
         } else {
-            return { message: 'It is a tie', humanScore: 0, computerScore: 0 }
+            return 'It is a tie'
         }
     }
 }
@@ -60,10 +60,7 @@ function playGame() {
     console.log("Paper, Scissors, Rock best of 5 ")
 
     while (continueGame) {
-        if (iterations === 5) {
-            continueGame = false
-            break
-        }
+
 
         const outcome = playRound(getHumanChoice(), getComputerChoice(), humanScore, computerScore)
         if (outcome['message'].includes('tie')) {
@@ -91,4 +88,22 @@ function playGame() {
 
 }
 
-playGame()
+rockBtn.addEventListener('click', function (e) {
+    const outcome = playRound(e.target.className, getComputerChoice())
+    results.innerHTML = `<p class="results">${outcome}</p>`
+    results.innerHTML += `<p>You: ${humanScore} | Computer: ${computerScore}</p>`
+})
+
+paperBtn.addEventListener('click', function (e) {
+    const outcome = playRound(e.target.className, getComputerChoice())
+    results.innerHTML = `<p class="results">${outcome}</p>`
+    results.innerHTML += `<p>You: ${humanScore} | Computer: ${computerScore}</p>`
+})
+
+scissorBtn.addEventListener('click', function (e) {
+    const outcome = playRound(e.target.className, getComputerChoice())
+    results.innerHTML = `<p class="results">${outcome}</p>`
+    results.innerHTML += `<p>You: ${humanScore} | Computer: ${computerScore}</p>`
+})
+
+// playGame()
