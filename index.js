@@ -4,6 +4,7 @@ const rockBtn = document.querySelector('.rock')
 const paperBtn = document.querySelector('.paper')
 const scissorBtn = document.querySelector('.scissors')
 const results = document.querySelector('.results')
+const scores = document.querySelector('.scores')
 
 let humanScore = 0
 let computerScore = 0
@@ -53,57 +54,48 @@ function playRound(humanGuess, computerGuess) {
     }
 }
 
-function playGame() {
-    let humanScore = 0
-    let computerScore = 0
-
-    console.log("Paper, Scissors, Rock best of 5 ")
-
-    while (continueGame) {
-
-
-        const outcome = playRound(getHumanChoice(), getComputerChoice(), humanScore, computerScore)
-        if (outcome['message'].includes('tie')) {
-            iterations += 1
-            console.log('It was a tie!');
-            continue
+function getGameStatus() {
+    const totalScore = humanScore + computerScore
+    if (totalScore >= 5) {
+        if (humanScore > computerScore) {
+            results.innerHTML = `<h2>You win! </h2>`
         } else {
-            humanScore = outcome['humanScore']
-            computerScore = outcome['computerScore']
+            results.innerHTML = `<h2>Computer wins. Try again!</h2>`
         }
 
-        console.log(outcome['message']);
-        iterations += 1
+        rockBtn.style.display = 'none'
+        paperBtn.style.display = 'none'
+        scissorBtn.style.display = 'none'
 
+        const playAgainLink = document.createElement('a')
+        playAgainLink.href = 'http://127.0.0.1:5500/index.html'
+        playAgainLink.textContent = 'Play Again?'
+        results.appendChild(playAgainLink)
     }
-
-    if (humanScore > computerScore) {
-        console.log(`You win! Score : You: ${humanScore} Computer: ${computerScore}`)
-    } else if (computerScore > humanScore) {
-        console.log(`You lose! Score : You: ${humanScore} Computer: ${computerScore}`);
-    } else {
-        console.log(`It was a tie game: Score : You: ${humanScore} Computer: ${computerScore}`);
-
-    }
-
 }
+
 
 rockBtn.addEventListener('click', function (e) {
     const outcome = playRound(e.target.className, getComputerChoice())
     results.innerHTML = `<p class="results">${outcome}</p>`
     results.innerHTML += `<p>You: ${humanScore} | Computer: ${computerScore}</p>`
+    getGameStatus()
 })
 
 paperBtn.addEventListener('click', function (e) {
     const outcome = playRound(e.target.className, getComputerChoice())
     results.innerHTML = `<p class="results">${outcome}</p>`
     results.innerHTML += `<p>You: ${humanScore} | Computer: ${computerScore}</p>`
+    getGameStatus()
 })
 
 scissorBtn.addEventListener('click', function (e) {
     const outcome = playRound(e.target.className, getComputerChoice())
     results.innerHTML = `<p class="results">${outcome}</p>`
     results.innerHTML += `<p>You: ${humanScore} | Computer: ${computerScore}</p>`
+    getGameStatus()
 })
 
-// playGame()
+
+
+
